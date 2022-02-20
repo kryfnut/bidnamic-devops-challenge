@@ -5,7 +5,7 @@ locals {
   cluster_name = "bidnamic-cluster"
 }
 
-#Define vpc resources using Hashicorp aws vpc module. Private and Public subnets in three AZs for HA
+#Define new vpc resources using Hashicorp aws vpc module. Private and Public subnets in three AZs for HA
 #Tagging the subnets with EKS cluster name and role
 
 data "aws_availability_zones" "available" {}
