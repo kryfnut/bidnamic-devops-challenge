@@ -55,8 +55,7 @@ ingress:
       paths:
         - path: /
           backend:
-            serviceName: flaskapp
-            servicePort: 80
+            servicePort: flaskapp
   tls: 
   #  - secretName: chart-example-tls
     - hosts:

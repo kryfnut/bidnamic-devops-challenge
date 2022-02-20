@@ -43,7 +43,7 @@ spec:
             {{- end }}
           ports:
             - name: flaskapp
-              containerPort: 80
+              containerPort: 5000
               protocol: TCP
           livenessProbe:
             httpGet:
