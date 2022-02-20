@@ -18,4 +18,4 @@ COPY src/* .
 
 EXPOSE 80
 
-ENTRYPOINT [ "python", "./bidnamic-app.py" ]
+ENTRYPOINT [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
