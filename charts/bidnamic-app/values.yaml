@@ -53,7 +53,7 @@ ingress:
   hosts:
     - host: bidnamic.tobisolomon.me
       paths:
-        - path: /flask
+        - path: /
           backend:
             servicePort: flaskapp
   tls: 
