@@ -1,6 +1,6 @@
 FROM alpine:latest AS build
 
-RUN useradd -ms /bin/bash app_user
+RUN useradd app_user
 
 USER app_user
 
