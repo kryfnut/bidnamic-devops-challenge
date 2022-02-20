@@ -46,16 +46,14 @@ ingress:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/group.name: bidnamic
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
-    alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
-    alb.ingress.kubernetes.io/healthcheck-port: '80'
-    alb.ingress.kubernetes.io/success-codes: 200-300
 
   hosts:
     - host: bidnamic.tobisolomon.me
       paths:
-        - path: /
+        - path: /*
           backend:
-            servicePort: flaskapp
+            serviceName: flaskapp
+            servicePort: 80
   tls: 
   #  - secretName: chart-example-tls
     - hosts:
