@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "bidnamic-app.fullname" . }}
+  labels:
+    {{- include "bidnamic-app.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: flaskapp
+      protocol: TCP
+      name: flaskapp
+  selector:
+    {{- include "bidnamic-app.selectorLabels" . | nindent 4 }}
