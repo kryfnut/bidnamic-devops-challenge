@@ -1,4 +1,4 @@
-FROM alpine:latest AS build
+FROM python:3.11-rc-alpine AS build
 
 # RUN useradd -ms /bin/bash app_user
 
