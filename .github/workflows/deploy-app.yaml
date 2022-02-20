@@ -1,0 +1,60 @@
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Python CI
+
+on:
+ push:
+   branches: [ master ]
+ pull_request:
+   branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
+        aws-region: eu-west-2
+    
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+        architecture: 'x86'
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+            
+    - name: Build and tag image to Amazon ECR
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: bidnamic-app
+        IMAGE_TAG: ${{ github.sha }}_flask-app
+      run: |
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+
+
+    - name: Push image to Amazon ECR
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: bidnamic-app
+        IMAGE_TAG: ${{ github.sha }}_flask-app
+      run: |
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+    - name: Get k8s credentials
+      run: aws eks update-kubeconfig --name bidnamic-cluster
+
+    - name: Update app
+      env:
+        IMAGE_TAG: ${{ github.sha }}_flask-app
+      run: helm upgrade -i bidnamic-app charts/bidnamic-app --set image.tag=$IMAGE_TAG 
