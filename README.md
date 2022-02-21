@@ -58,8 +58,8 @@ The following are required also -
     
     Add 'New Repository Secret' for each of the following secrets :
 
-            - 'AWS_ACCESS_KEY_ID' = IAM User 'foo' 'access_key_id' value 
-            - 'AWS_SECRET_ACCESS_KEY' = IAM User 'foo' 'secret_access_key' value
+            - 'AWS_ACCESS_KEY_ID'       = IAM User 'foo' 'access_key_id' value 
+            - 'AWS_SECRET_ACCESS_KEY'   = IAM User 'foo' 'secret_access_key' value
 
 ![secrets](./images/secret.png)
 
@@ -67,13 +67,13 @@ The following are required also -
 
 4. Open Terminal and run 
 
-        'aws configure --profile name-you-wish-to-use'
+        aws configure --profile name-you-wish-to-use
     
     Input the IAM User credential values for 'foo'
     - 'access_key_id'
     - 'secret_access_key'
     - eu-west-2             //or where your region is on AWS
-    
+
 ![sawsconfig](./images/awsconfig.png)
     
 5. Navigate into /iac folder - 'cd iac/' and follow below steps -
@@ -104,13 +104,16 @@ The following are required also -
 
     C.  Run the following commands to process Terraform files
 
-        - terraform init        #to install all dependencies and required providers
-        - terraform plan        #to see a list/summary of all resources to be provisioned
-        - terraform apply       #to install the resources as detailed in 'plan' to AWS
+        - terraform init        
+        - terraform plan        
+        - terraform apply       
 
-6. Once terraform installation is complete, trigger (push/pull to master) the Git Actions workflow to deploy the Flask App within your EKS Cluster and expose it via https://bidnamic.your_domain_name/
+6. Once terraform installation is complete
+    - trigger Git Actions workflow to deploy the Flask App within your EKS Cluster and expose it via https://bidnamic.your_domain_name/
+
 
 ![gitaction](./images/gitaction.png)
+
 
 ### Monitoring
     
@@ -118,12 +121,15 @@ The following are required also -
 
 2. Open CloudWatch Dashboard to visualise statistics being collected and view log groups from the cluster.
     - CloudWatch > Logs > Log Groups
+
     
 ![loggroup](./images/loggroup.png)
 
 ![applogs](./images/applogs.png)
 
+
     - CloudWatch > Insights > Container Insights
+
 
 ![conmap](./images/conmap.png)
 
@@ -132,17 +138,16 @@ The following are required also -
 ![resz](./images/resz.png)
 
 ## Troubleshooting
-
+List all the AWS resources installed and managed by Terraform
         terraform show                          
-#To list all the AWS resources installed and managed by Terraform
 
+Get pods in default namespace which should include bidnamic-app and bidnamic-alb-controller
         kubectl get pods                         
-#To get pods in default namespace which should include bidnamic-app and bidnamic-alb-controller
 
 ![getpods](./images/getpods.png)
 
+Ensure the cloudwatch agent and fluentbit deployed successfully
         kubectl get pods -n amazon-cloudwatch    
-#To ensure the cloudwatch agent and fluentbit deployed successfully
 
 ![getpodsn](./images/getpodsn.png)
 
