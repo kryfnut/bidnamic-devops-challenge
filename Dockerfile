@@ -1,20 +1,20 @@
-FROM python:3.11-rc-alpine AS build
-
-# RUN useradd -ms /bin/bash app_user
-
-# USER app_user
-
-WORKDIR /usr/src/app
-
-ENV FLASK_APP=app.py
-
-COPY requirements.txt requirements.txt
+FROM python:3.10.2-alpine3.15
 
 RUN apk update && pip3 install virtualenv
+
+COPY requirements.txt requirements.txt
 
 RUN virtualenv -p python3 venv && . venv/bin/activate
 
 RUN pip3 install -r requirements.txt
+
+RUN addgroup -S appuser && adduser -S appuser -G appuser
+
+USER appuser
+
+WORKDIR /usr/src/app
+
+ENV FLASK_APP=app.py
 
 COPY src/* . 
 
