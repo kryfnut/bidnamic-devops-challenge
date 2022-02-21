@@ -1,9 +1,9 @@
 # bidnamic-devops-challenge
 
-## Description
-Bidnamic's DevOps Coding Challenge for DevOps Engineer Job Role. The Flask app is exposed via the following URL https://bidnamic.tobisolomon.me/ 
+> Bidnamic's DevOps Coding Challenge for DevOps Engineer Job Role.  
+> Live demo hosted [_here_](https://bidnamic.tobisolomon.me/). 
 
-The code deploys and maintains infrastructure on AWS to support a simple Flask application. The following tools/services are used -
+## Technologies and Services Used
 
 1. Terraform - Used to provision the following resources on AWS:
     - VPC with specified CIDR, private and public subnet. NAT gateway enabled
@@ -31,8 +31,6 @@ The code deploys and maintains infrastructure on AWS to support a simple Flask a
 
 10. AWS CloudWatch - FluentBit and CloudWatch Agent are installed into EKS cluster using AWS CLI for Container Insights/Central Log Streaming and Performance Insights (Visualised Utilization Stats, Application tracing) to CloudWatch.
 
-11. SIEGE - To load test our Flask app/service and simulteanously see performance changes on CloudWatch.
-
 
 ## Installation
 ### Prerequisites 
@@ -54,18 +52,23 @@ The following are required also -
 1. Fork/Clone repository to your own repository - https://github.com/kryfnut/bidnamic-devops-challenge.git
     
 2. Login to your AWS Console. Navigate to IAM and create a new Programmatic Access User with 'AdministrativeAccess' Policy binding. Download CSV with IAM user details.
+![IAMUser](./images/IAMUser.png)
+![IAMUser2](./images/IAMUser2.png)
     
 3. Go to repository settings > secrets > actions secret :
          Add 'New Repository Secret' for each of the following secrets :
 
             - Enter key as 'AWS_ACCESS_KEY_ID' and set to IAM User access_key_id value you created for GitHub Authentication. 
             - Enter key as 'AWS_SECRET_ACCESS_KEY' and set to same IAM User secret_access_key value created for GitHub Authentication.
+![secrets](./images/secret.png)
+![secrets2](./images/secret2.png)
 
 4. Open Terminal and run 
 
         'aws configure --profile name-you-wish-to-use'
     
-    - Input the AWS credentials of your IAM User and set the region to where you AWS environment would be hosted. eu-west-2 in this case.
+    - Input the AWS credentials of your IAM User and set the region to where you AWS environment would be hosted ---->  eu-west-2 in this case.
+![sawsconfig](./images/awsconfig.png)
     
 5. Navigate into /iac folder - 'cd iac/' and follow below steps -
 
@@ -100,6 +103,7 @@ The following are required also -
         - terraform apply       #to install the resources as detailed in 'plan' to AWS
 
 6. Once terraform installation is complete, trigger (push/pull to master) the Git Actions workflow to deploy the Flask App within your EKS Cluster and expose it via https://bidnamic.your_domain_name/
+![gitaction](./images/gitaction.png)
 
 ### Monitoring
     
@@ -107,11 +111,25 @@ The following are required also -
 
 2. Open CloudWatch Dashboard to visualise statistics being collected and view log groups from the cluster.
     - CloudWatch > Logs > Log Groups
+    ![loggroup](./images/loggroup.png)
+    ![applogs](./images/applogs.png)
+
     - CloudWatch > Insights > Container Insights
+    ![conmap](./images/conmap.png)
+    ![perfmon](./images/perfmon.png)
+    ![resz](./images/resz.png)
 
 ## Troubleshooting
 
 1. terraform show                           #To list all the AWS resources installed and managed by Terraform
-2. kubectl get pods                         #To get pods in default namespace which should include bidnamic-app and bidnamic-alb-controller
-3. kubectl get pods -n amazon-cloudwatch    #To ensure the cloudwatch agent and fluentbit deployed successfully
 
+2. kubectl get pods                         #To get pods in default namespace which should include bidnamic-app and bidnamic-alb-controller
+![getpods](./images/getpods.png)
+
+3. kubectl get pods -n amazon-cloudwatch    #To ensure the cloudwatch agent and fluentbit deployed successfully
+![getpodsn](./images/getpodsn.png)
+
+## Areas for Improvement
+- Subscribe to SNS for Notifications on failed Alarms for proactive monitoring
+- Integrate with API Gateway
+- Scan Docker Images on Push to ECR
