@@ -43,12 +43,12 @@ resource "aws_eks_node_group" "bidnamic_node_group" {
   node_group_name = local.node_group_name
   node_role_arn   = aws_iam_role.bidnamic_node.arn
   subnet_ids      = module.vpc.private_subnets
-  instance_types = ["t2.micro"]
+  instance_types = ["t2.medium"]
 
 
   scaling_config {
-    desired_size = 1
-    max_size     = 3
+    desired_size = 2
+    max_size     = 5
     min_size     = 1
   }
 
