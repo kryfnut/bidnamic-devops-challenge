@@ -120,7 +120,7 @@ The following are required also -
 1. Install CloudWatch Agent and FluentBit into EKS Cluster to collect logs and metrics and send to CloudWatch Dashboard for Monitoring and Troubleshooting. See guide on how to install here - https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/deploy-container-insights-EKS.html
 
 2. Open CloudWatch Dashboard to visualise statistics being collected and view log groups from the cluster.
-    - CloudWatch > Logs > Log Groups
+   - CloudWatch > Logs > Log Groups
 
     
 ![loggroup](./images/loggroup.png)
@@ -128,7 +128,7 @@ The following are required also -
 ![applogs](./images/applogs.png)
 
 
-    - CloudWatch > Insights > Container Insights
+   - CloudWatch > Insights > Container Insights
 
 
 ![conmap](./images/conmap.png)
@@ -139,15 +139,18 @@ The following are required also -
 
 ## Troubleshooting
 List all the AWS resources installed and managed by Terraform
-        terraform show                          
+            
+            terraform show                          
 
 Get pods in default namespace which should include bidnamic-app and bidnamic-alb-controller
-        kubectl get pods                         
+            
+            kubectl get pods                         
 
 ![getpods](./images/getpods.png)
 
 Ensure the cloudwatch agent and fluentbit deployed successfully
-        kubectl get pods -n amazon-cloudwatch    
+            
+            kubectl get pods -n amazon-cloudwatch    
 
 ![getpodsn](./images/getpodsn.png)
 
