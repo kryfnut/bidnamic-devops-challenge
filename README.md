@@ -138,17 +138,17 @@ The following are required also -
 ![resz](./images/resz.png)
 
 ## Troubleshooting
-List all the AWS resources installed and managed by Terraform
+1. List all the AWS resources installed and managed by Terraform
             
             terraform show                          
 
-Get pods in default namespace which should include bidnamic-app and bidnamic-alb-controller
+2. Get pods in default namespace which should include bidnamic-app and bidnamic-alb-controller
             
             kubectl get pods                         
 
 ![getpods](./images/getpods.png)
 
-Ensure the cloudwatch agent and fluentbit deployed successfully
+3. Ensure the cloudwatch agent and fluentbit deployed successfully
             
             kubectl get pods -n amazon-cloudwatch    
 
