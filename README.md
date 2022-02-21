@@ -61,7 +61,10 @@ The following are required also -
             - Enter key as 'AWS_ACCESS_KEY_ID' and set to IAM User access_key_id value you created for GitHub Authentication. 
             - Enter key as 'AWS_SECRET_ACCESS_KEY' and set to same IAM User secret_access_key value created for GitHub Authentication.
 
-4. Open Terminal and run 'aws configure --profile name-you-wish-to-use'
+4. Open Terminal and run 
+
+        'aws configure --profile name-you-wish-to-use'
+    
     - Input the AWS credentials of your IAM User and set the region to where you AWS environment would be hosted. eu-west-2 in this case.
     
 5. Navigate into /iac folder - 'cd iac/' and follow below steps -
