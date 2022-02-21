@@ -48,17 +48,18 @@ The following are required also -
 ### Steps
 1. Fork [_repository_](https://github.com/kryfnut/bidnamic-devops-challenge.git) to your own repository
     
-2. Login to your AWS Console. Navigate to IAM and create a new Programmatic Access User with 'AdministrativeAccess' Policy binding. Download CSV with IAM user details.
+2. Login to your AWS Console. Navigate to IAM and create a new Programmatic Access User 'foo' with 'AdministrativeAccess' Policy binding for authentication. Download CSV with IAM user details.
 
 ![IAMUser](./images/IAMUser.png)
 
 ![IAMUser2](./images/IAMUser2.png)
     
-3. Go to repository settings > secrets > actions secret :
-         Add 'New Repository Secret' for each of the following secrets :
+3. Go to repository settings > secrets > actions secret
+    
+    Add 'New Repository Secret' for each of the following secrets :
 
-            - Enter key as 'AWS_ACCESS_KEY_ID' and set to IAM User access_key_id value you created for GitHub Authentication. 
-            - Enter key as 'AWS_SECRET_ACCESS_KEY' and set to same IAM User secret_access_key value created for GitHub Authentication.
+            - 'AWS_ACCESS_KEY_ID' = IAM User 'foo' 'access_key_id' value 
+            - 'AWS_SECRET_ACCESS_KEY' = IAM User 'foo' 'secret_access_key' value
 
 ![secrets](./images/secret.png)
 
@@ -68,7 +69,11 @@ The following are required also -
 
         'aws configure --profile name-you-wish-to-use'
     
-    - Input the AWS credentials of your IAM User and set the region to where you AWS environment would be hosted ---->  eu-west-2 in this case.
+    Input the IAM User credential values for 'foo'
+    - 'access_key_id'
+    - 'secret_access_key'
+    - eu-west-2             //or where your region is on AWS
+    
 ![sawsconfig](./images/awsconfig.png)
     
 5. Navigate into /iac folder - 'cd iac/' and follow below steps -
