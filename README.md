@@ -66,26 +66,37 @@ The following are required also -
     
 5. Navigate into /iac folder - 'cd iac/' and follow below steps -
 
-        A. Edit the following in ingress.tf file -
+    A. Edit the following in ingress.tf file -
     
-            data "aws_route53_zone" "tobisolomon_me" {
-            name = "tobisolomon.me"  // change to your DN hosted on Route53
-            }
+        data "aws_route53_zone" "tobisolomon_me" {
+        name = "tobisolomon.me"         // change to your DN hosted on Route53
+        }
 
-            data "aws_acm_certificate" "tobisolomon_me" {
-            domain   = "tobisolomon.me" // change to your DN hosted on Route53 w/SSL
-            statuses = ["ISSUED"]
-            }                
+        data "aws_acm_certificate" "tobisolomon_me" {
+        domain   = "tobisolomon.me"     // change to your DN hosted on Route53 w/SSL Cert
+        statuses = ["ISSUED"]
+        }                
 
-            Then save the file and exit.
+    Then save the file and exit.
 
-        B.  Run the following commands to process Terraform files
+    B. Edit the following in provider-backend.tf file -
+
+        backend "s3" {
+            bucket  = "iac-tobi-solomon"    //your S3 bucket name 
+            key     = "bidnamic/"           //path in the bucket
+            region  = "eu-west-2"           //region where bucket resides in AWS
+            profile = "tobi"                //AWS CLI/Configure profile 
+            encrypt = true
+          }
+        }
+
+    C.  Run the following commands to process Terraform files
 
         - terraform init        #to install all dependencies and required providers
         - terraform plan        #to see a list/summary of all resources to be provisioned
         - terraform apply       #to install the resources as detailed in 'plan' to AWS
 
-6. Once installation is complete, trigger (push/pull to master) the Git Actions workflow to deploy the Flask App within your EKS Cluster and expose it via https://bidnamic.your_domain_name/
+6. Once terraform installation is complete, trigger (push/pull to master) the Git Actions workflow to deploy the Flask App within your EKS Cluster and expose it via https://bidnamic.your_domain_name/
 
 ### Monitoring
     
@@ -97,7 +108,7 @@ The following are required also -
 
 ## Troubleshooting
 
-1. terraform show #To list all the AWS resources installed and managed by Terraform
-2. kubectl get pods  #To get pods in default namespace which should include bidnamic-app and bidnamic-alb-controller
-3. kubectl get pods -n amazon-cloudwatch #To ensure the cloudwatch agent and fluentbit deployed successfully
+1. terraform show                           #To list all the AWS resources installed and managed by Terraform
+2. kubectl get pods                         #To get pods in default namespace which should include bidnamic-app and bidnamic-alb-controller
+3. kubectl get pods -n amazon-cloudwatch    #To ensure the cloudwatch agent and fluentbit deployed successfully
 
