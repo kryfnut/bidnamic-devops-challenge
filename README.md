@@ -42,19 +42,24 @@ You need to have the following installed on your local machine -
 2. Helm
 3. AWS CLI
 5. KubeCtl
-6. AWS Account
-7. Programmatic IAM User for Github Authentication
-8. Shell 
+6. Shell 
+
+The following are required also -
+
+1. AWS Account
+2. Programmatic IAM User for Github Authentication
+ 
 
 ### Steps
 1. Fork/Clone repository to your own repository - https://github.com/kryfnut/bidnamic-devops-challenge.git
     
 2. Login to your AWS Console. Navigate to IAM and create a new Programmatic Access User with 'AdministrativeAccess' Policy binding. Download CSV with IAM user details.
     
-3. Go to repository settings>secrets>actions secret :
-    - Add 'New Repository Secret'
-    - Enter key as 'AWS_ACCESS_KEY_ID' and set to IAM User access_key_id value you created for GitHub Authentication. 
-    - Enter key as 'AWS_SECRET_ACCESS_KEY' and set to same IAM User secret_access_key value created for GitHub Authentication.
+3. Go to repository settings > secrets > actions secret :
+         Add 'New Repository Secret' for each of the following secrets :
+
+            - Enter key as 'AWS_ACCESS_KEY_ID' and set to IAM User access_key_id value you created for GitHub Authentication. 
+            - Enter key as 'AWS_SECRET_ACCESS_KEY' and set to same IAM User secret_access_key value created for GitHub Authentication.
 
 4. Open Terminal and run 'aws configure --profile name-you-wish-to-use'
     - Input the AWS credentials of your IAM User and set the region to where you AWS environment would be hosted. eu-west-2 in this case.
@@ -76,9 +81,9 @@ You need to have the following installed on your local machine -
 
         B.  Run the following commands to process Terraform files
 
-    - terraform init - to install all dependencies and required providers
-    - terraform plan - to see a list/summary of all resources to be provisioned
-    - terraform apply - to install the resources as detailed in 'plan' to AWS
+        - terraform init        #to install all dependencies and required providers
+        - terraform plan        #to see a list/summary of all resources to be provisioned
+        - terraform apply       #to install the resources as detailed in 'plan' to AWS
 
 6. Once installation is complete, trigger (push/pull to master) the Git Actions workflow to deploy the Flask App within your EKS Cluster and expose it via https://bidnamic.your_domain_name/
 
@@ -87,8 +92,8 @@ You need to have the following installed on your local machine -
 1. Install CloudWatch Agent and FluentBit into EKS Cluster to collect logs and metrics and send to CloudWatch Dashboard for Monitoring and Troubleshooting. See guide on how to install here - https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/deploy-container-insights-EKS.html
 
 2. Open CloudWatch Dashboard to visualise statistics being collected and view log groups from the cluster.
-    - CloudWatch>Logs>Log Groups
-    - CloudWatch>Insights>Container Insights
+    - CloudWatch > Logs > Log Groups
+    - CloudWatch > Insights > Container Insights
 
 ## Troubleshooting
 
